@@ -48,7 +48,7 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr &msg){
 	ROS_INFO_STREAM_THROTTLE(1,"OK");
 	
 	msg1.header = msg->header;
-	msg1.child_frame_id = msg1->child_frame_id;
+	msg1.child_frame_id = msg->child_frame_id;
 	odomPublisher.publish(msg1);	
 	
 }
