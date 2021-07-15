@@ -1,55 +1,25 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(indySlam)
+cmake_minimum_required(VERSION 3.10.2)
+project(IndySLAM)
 
-# use C++11
-add_compile_options(-std=c++11)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-# Find catkin macros and libraries
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  nav_msgs
+find_package(catkin REQUIRED 
+			COMPONENTS roscpp nav_msgs
 )
 
-###################################
-## catkin specific configuration ##
-###################################
 catkin_package(
-  INCLUDE_DIRS
-    include
-  CATKIN_DEPENDS
-    roscpp
-    nav_msgs
+	INCLUDE_DIRS include
+	# LIBRARIES
+	CATKIN_DEPENDS roscpp nav_msgs
+	# DEPENDS
 )
 
-###########
-## Build ##
-###########
+include_directories (include ${catkin_INCLUDE_DIRS})
 
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-)
-
-# Declare a C++ executable
 add_executable(${PROJECT_NAME}
-  src/indy_odom.cpp
-)
+src/indy_odom_node.cpp
+src/IndyOdom.cpp )
 
-# Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME}
-  ${catkin_LIBRARIES}
-)
 
-#############
-## Install ##
-#############
-
-# Mark executables for installation
-install(TARGETS ${PROJECT_NAME}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-# Mark other files for installation (e.g. launch and bag files, etc.)
-# install(DIRECTORY launch config rviz
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
