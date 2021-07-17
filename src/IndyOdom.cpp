@@ -1,13 +1,15 @@
 #include "indy_odom_handler/IndyOdom.hpp"
+#include <cmath>
 
-#define MEAN 0.0
-#define LINEAR_SD 0.06
-#define ANGULAR_SD 3.14*5/180
 
 namespace indySLAM {
 
 indyOdom::indyOdom(ros::NodeHandle& nodeHandle) : nh_(nodeHandle)
-{
+{	
+	if (!readParams()) {
+		ROS_ERROR("Could not read parameters.");
+		ros::requestShutdown();
+	}
 	sub_ = nh_.subscribe("/carla/vehicle/086/odometry", 10, &indyOdom::callBack_Odom, this);
 	output_pub_ = nh_.advertise<nav_msgs::Odometry>("noisy_odom", 10);
 	input_pub_ 	= nh_.advertise<nav_msgs::Odometry>("clean_odom", 10);
@@ -17,6 +19,14 @@ indyOdom::indyOdom(ros::NodeHandle& nodeHandle) : nh_(nodeHandle)
 
 indyOdom::~indyOdom()
 {
+}
+
+
+bool indyOdom::readParams(){
+	bool success = true;
+	success &= nh_.getParam("/IndyOdom/position_std_deviation", position_sd);
+	success &= nh_.getParam("/IndyOdom/orientation_std_deviation", orientation_sd);
+	return success;
 }
 
 void indyOdom::callBack_Odom(const nav_msgs::Odometry::ConstPtr& msg)
@@ -33,7 +43,7 @@ void indyOdom::addGausianNoise_Odom(const nav_msgs::Odometry::ConstPtr& msg)
 
 	std::random_device rd;
 	std::default_random_engine generator;
-	std::normal_distribution<double> linear_distribution(MEAN, LINEAR_SD), angular_distribution(MEAN, ANGULAR_SD);
+	std::normal_distribution<double> linear_distribution(0, position_sd), angular_distribution(0, M_PI*orientation_sd/180);
 
 	generator.seed(rd()); 
 

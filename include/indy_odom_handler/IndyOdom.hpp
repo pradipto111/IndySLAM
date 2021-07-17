@@ -21,6 +21,7 @@ private:
 	// Publish Noisy Odometry Data
 	void publishNoisyData_Odom();
 	void publishCleanData_Odom();
+	bool readParams();
 
 	// ROS Node Handler
 	ros::NodeHandle &nh_;
@@ -33,6 +34,11 @@ private:
 	// Data with added noise
 	nav_msgs::Odometry noisy_odom_data_;
 	nav_msgs::Odometry clean_odom_data_;
+	
+	//parameters
+	float position_sd;
+	float orientation_sd;
+	
 
 }; /* class */
 
