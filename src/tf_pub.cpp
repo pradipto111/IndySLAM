@@ -30,7 +30,7 @@ void tf_callback(const tf2_msgs::TFMessage::ConstPtr& tf){
 		tf_publisher.publish(tf_.transforms[0]);
 	}
 	i++;
-	ROS_INFO_STREAM("Tf_data published "<< i);
+	//ROS_INFO_STREAM("Tf_data published "<< i);
 }
 
 

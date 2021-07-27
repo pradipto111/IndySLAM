@@ -56,8 +56,18 @@ add_executable(icp
   src/icp.cpp
 )
 
+add_executable(IndyOdom
+  src/indy_odom_node.cpp
+  src/IndyOdom.cpp
+)
+
 # Specify libraries to link a library or executable target against
 target_link_libraries(tf_pub
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+target_link_libraries(IndyOdom
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )

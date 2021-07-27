@@ -63,7 +63,7 @@ void indyOdom::addGausianNoise_Odom(const nav_msgs::Odometry::ConstPtr& msg)
 	// noisy_odom_data_.twist.twist.angular.y += angular_distribution(generator);
 	// noisy_odom_data_.twist.twist.angular.z += angular_distribution(generator);
 
-	ROS_INFO("Data Succesfully Added");
+	//ROS_INFO("Data Succesfully Added");
 }
 
 void indyOdom::publishNoisyData_Odom()

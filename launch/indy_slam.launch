@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <node pkg="IndySLAM" type="IndySLAM" name="IndyOdom" output="screen">
+  <node pkg="IndySLAM" type="IndyOdom" name="IndyOdom" output="screen">
     <rosparam file="$(dirname)/../config/parameters.yaml" command="load"/>
   </node>
   <node pkg="IndySLAM" type="icp" name="icp" output="screen"/>
